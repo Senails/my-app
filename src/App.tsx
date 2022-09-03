@@ -1,4 +1,5 @@
 import Auth from './components/auth/Auth';
+import Coin from './components/coin/Coin';
 import { RootState, useAppDispatch, useAppSelector } from './Redux/store';
 
 function App() {
@@ -8,7 +9,11 @@ function App() {
   return (
     <div className="App">
       {user.auth? 'Авторизован':'Не авторизован'}
-      {!user.auth && <Auth/>}
+      {user.auth && <Auth/>}
+
+      <div className='timebox'>
+          <Coin size={100}/>
+      </div>
     </div>
   );
 }
