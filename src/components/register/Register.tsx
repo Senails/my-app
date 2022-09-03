@@ -40,8 +40,8 @@ export default function Register({chagestate , aregister}:propstype){
         <div className='input'>
             <label>
                 <input type="text" value={nickname} onChange={(event)=>setnickname(event.target.value)}/>   
-                <span className={'shad '+(nickname.length? 'active' : '')}>nickname</span>
-                <span className={'plaseholder '+(nickname.length? 'active' : '')}>nickname</span>
+                <span className={'shad '+(nickname.length? 'active' : '')}>name</span>
+                <span className={'plaseholder '+(nickname.length? 'active' : '')}>name</span>
             </label>
         </div>
         <div className='input'>

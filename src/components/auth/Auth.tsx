@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { cleanmessage, endload, setmessage, startload } from '../../Redux/Slices/Userslice';
 import { useAppDispatch} from '../../Redux/store';
+
+import { cleanmessage, endload, setmessage, startload } from '../../Redux/Slices/Userslice';
+import { validation } from '../../utils/registrvalidation';
 import Login from '../login/Login';
 import Register from '../register/Register';
 import './style.scss'
@@ -22,15 +24,25 @@ export default function Auth():JSX.Element{
     }
 
     function register(email:string,nick:string,pass:string,reppass:string){
+        dispatch(cleanmessage())
         dispatch(startload());
-
         setTimeout(() => {
-            dispatch(setmessage('register'))
+
+            let res = validation({email,password:pass, name:nick,reppass})
+            if (res) dispatch(setmessage(res.massage))
+
+
+
+
+
+
+
             dispatch(endload());
-        }, 1000);
+        }, 500);
     }
 
     function login(login:string, pass:string){
+        dispatch(cleanmessage())
         dispatch(startload());
 
         setTimeout(() => {
