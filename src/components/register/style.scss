@@ -1,0 +1,153 @@
+.registr {
+    box-sizing: border-box;
+    width: 500px;
+    height: 450px;
+    background-color: #272727;
+    border-radius: 10px;
+    padding-top: 150px;
+    position: relative;
+    overflow: hidden;
+    >.input {
+        width: 400px;
+        height: 40px;
+        background: #4F4E4E;
+        border-radius: 10px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        position: relative;
+        label {
+            input {
+                font-family: 'Inter';
+                font-style: normal;
+                font-size: 16px;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                background: #4F4E4E;
+                border: none;
+                outline: none;
+                padding-left: 20px;
+                padding-right: 40px;
+                color: white;
+            }
+            .plaseholder {
+                user-select: none;
+                position: absolute;
+                top: 0;
+                left: 20px;
+                height: 100%;
+                font-family: 'Inter';
+                font-style: normal;
+                font-size: 16px;
+                line-height: 40px;
+                transition: 0.3s;
+                border-radius: 8px;
+                &.active {
+                    padding: 0 10px;
+                    height: 16px;
+                    top: -10px;
+                    font-size: 13px;
+                    line-height: 16px;
+                    color: white;
+                    //color: #FF007A;
+                }
+            }
+            .shad {
+                user-select: none;
+                position: absolute;
+                font-family: 'Inter';
+                top: -16px;
+                left: 20px;
+                font-size: 13px;
+                line-height: 16px;
+                padding: 0 10px;
+                border-radius: 8px;
+                background-color: #272727;
+                color: #272727;
+                transition: 0.3s;
+                &.active {
+                    top: -9px;
+                }
+            }
+            input:focus~.plaseholder {
+                padding: 0 10px;
+                height: 16px;
+                top: -10px;
+                font-size: 13px;
+                line-height: 16px;
+                color: white;
+                //color: #FF007A;
+            }
+            input:focus~.shad {
+                top: -9px;
+            }
+        }
+        &:nth-last-child(2) {
+            margin-bottom: 10px;
+        }
+        .eye {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: #4F4E4E;
+            background-image: url('../../assets/closee.svg');
+            background-size: contain;
+            transition: 0.2s;
+            &.active {
+                background-image: url('../../assets/opene.svg');
+            }
+        }
+    }
+    >.flexboxx {
+        user-select: none;
+        width: 400px;
+        height: 19px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        span {
+            font-family: 'Inter';
+            font-style: normal;
+            font-size: 16px;
+            line-height: 19px;
+            color: rgb(212, 212, 212);
+            transition: 0.5s;
+            &:hover {
+                color: rgb(255, 255, 255);
+                text-decoration: underline;
+            }
+        }
+    }
+    >.boxlogin {
+        position: absolute;
+        top: 27px;
+        left: 50px;
+        width: 400px;
+        height: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .mlogin {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 50px;
+            width: 100%;
+            text-align: center;
+        }
+        .loginmess {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            width: 100%;
+            color: rgb(255, 99, 99);
+            text-align: center;
+        }
+    }
+}
