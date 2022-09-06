@@ -1,56 +1,131 @@
-import { useState } from 'react';
-import { useAppDispatch} from '../../Redux/store';
+import { useCallback, useEffect, useState } from 'react';
+import { RootState, useAppDispatch} from '../../Redux/store';
 
-import { cleanmessage, endload, setmessage, startload } from '../../Redux/Slices/Userslice';
+import { cleanmessage, endload, setmessage, startload, setlogin, loginprops } from '../../Redux/Slices/Userslice';
 import { validation } from '../../utils/registrvalidation';
-import Login from '../login/Login';
-import Register from '../register/Register';
+import Login from './login/Login';
+import Register from './register/Register';
 import './style.scss'
+import { gettoken } from '../../utils/memtoken';
+import { apiadress } from '../../api/data';
+import { useSelector } from 'react-redux';
+
+
 
 export default function Auth():JSX.Element{
+    let auth = useSelector((state: RootState)=>state.user.auth);
     let dispatch = useAppDispatch();
     type forstate = 'login' | 'registr';
     let [state,setstate]=useState<forstate>('login')
     let [svip , setsvip]=useState<boolean>(false);
 
 
-    function change(string:forstate){
+    let change =useCallback(function(string:forstate){
         dispatch(cleanmessage())
         setsvip(true);
         setTimeout(()=>{
             setstate(string);
             setsvip(false);
         },500)
-    }
+    },[])
 
-    function register(email:string,nick:string,pass:string,reppass:string){
-        dispatch(cleanmessage())
-        dispatch(startload());
-        setTimeout(() => {
-
-            let res = validation({email,password:pass, name:nick,reppass})
-            if (res) dispatch(setmessage(res.massage))
-
-
-
-
-
-
-
-            dispatch(endload());
-        }, 500);
-    }
-
-    function login(login:string, pass:string){
+    let register = useCallback(async function(email:string,nick:string,pass:string,reppass:string){
         dispatch(cleanmessage())
         dispatch(startload());
 
-        setTimeout(() => {
-            dispatch(setmessage('login'))
-            dispatch(endload());
-        }, 1000);
-    }
+        let res = validation({email,password:pass, name:nick,reppass})
+        if (res) {
+            dispatch(setmessage(res.massage))
+        }else{
 
+            let resfetch = await fetch(apiadress+'/auth/registr',{
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    "email": email,
+                    "password": pass,
+                    "nickname" : nick
+                })
+            });
+            let json = await resfetch.json();
+
+            console.log(json)
+
+            if (json.message){
+                let obj: {message: string} = json;
+                dispatch(setmessage(obj.message));
+            }else{
+                let obj: loginprops = json;
+                dispatch(setlogin(obj));
+            }
+        }
+
+
+        dispatch(endload());
+    },[])
+
+    let login = useCallback(async function(login:string, pass:string){
+        dispatch(cleanmessage())
+        dispatch(startload());
+
+        let res = await fetch(apiadress+'/auth/login',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                "email": login,
+                "password": pass
+            })
+          });
+
+        let json = await res.json();
+        console.log(json)
+
+        if (json.message){
+            let obj: {message: string} = json;
+            dispatch(setmessage(obj.message));
+        }else{
+            let obj: loginprops = json;
+            dispatch(setlogin(obj));
+        }
+        dispatch(endload());
+    },[])
+
+    let authme = useCallback(async function() {
+        let token = gettoken()
+        if (!token) return
+
+        dispatch(cleanmessage())
+        dispatch(startload());
+
+        let res = await fetch(apiadress+'/auth/me',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                "token": token
+                })
+          });
+
+        let json = await res.json();
+        console.log(json)
+
+        if (json.message){
+            let obj: {message: string} = json;
+            dispatch(setmessage(obj.message));
+        }else{
+            let obj: loginprops = json;
+            dispatch(setlogin(obj));
+        }
+        dispatch(endload());
+        
+    },[])
+
+    useEffect(()=>{authme()},[])
 
     return <div className='auth'>
         <div className={'authbox '+ (svip? 'svs': '')}>

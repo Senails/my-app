@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { RootState, useAppSelector } from '../../Redux/store'
-import Loader from '../loader/Loader';
+import { RootState, useAppSelector } from '../../../Redux/store'
+import Loader from '../../loader/Loader';
 import './style.scss'
 
 

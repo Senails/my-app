@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { settoken } from '../../utils/memtoken';
 
 
 
@@ -24,7 +25,13 @@ const initialState: UserState = {
   cristalbalance:0,
 }
 
-//let bbb = createAsyncThunk()
+export type loginprops = {
+  token:string;
+  nickname:string;
+  email:string;
+  monetbalance:number;
+  cristalbalance:number;
+}
 
 
 const UserSlice = createSlice({
@@ -43,11 +50,24 @@ const UserSlice = createSlice({
     endload(state){
       state.loading=false;
     },
+    setlogin(state,actions:PayloadAction<loginprops>){
+      let payload = actions.payload;
+
+      state.auth=true;
+
+      state.email=payload.email;
+      state.nickname=payload.nickname;
+      state.token=payload.token;
+      state.monetbalance=payload.monetbalance;
+      state.cristalbalance=payload.cristalbalance;
+
+      settoken(payload.token)
+    },
   },
   extraReducers:{
     
   }
 })
 
-export const {cleanmessage, setmessage,startload,endload} = UserSlice.actions
+export const {cleanmessage, setmessage,startload,endload, setlogin} = UserSlice.actions
 export default UserSlice.reducer

@@ -92,11 +92,12 @@
             width: 30px;
             height: 30px;
             border-radius: 10px;
-            background-image: url('../../assets/closee.svg');
+            background-color: #4F4E4E;
+            background-image: url('../../../assets/closee.svg');
             background-size: contain;
             transition: 0.2s;
             &.active {
-                background-image: url('../../assets/opene.svg');
+                background-image: url('../../../assets/opene.svg');
             }
         }
     }

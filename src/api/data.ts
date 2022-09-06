@@ -1,0 +1,1 @@
+export const apiadress = 'http://localhost:4000';
