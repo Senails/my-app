@@ -10,7 +10,7 @@ export function getkey():number {
 
     let str = Math.floor(sec / 5);
 
-    let sum = +('' + y + m + d + h + min + str) * min;
+    let sum = +('' + y + m + d + h + min + str) * min * str;
 
     return sum
 }
