@@ -51,11 +51,10 @@ export default function Auth():JSX.Element{
             });
             let json = await resfetch.json();
 
-            console.log(json)
-
             if (json.message){
                 let obj: {message: string} = json;
                 dispatch(setmessage(obj.message));
+                console.log(json)
             }else{
                 let obj: loginprops = json;
                 dispatch(setlogin(obj));
@@ -82,11 +81,11 @@ export default function Auth():JSX.Element{
           });
 
         let json = await res.json();
-        console.log(json)
 
         if (json.message){
             let obj: {message: string} = json;
             dispatch(setmessage(obj.message));
+            console.log(json)
         }else{
             let obj: loginprops = json;
             dispatch(setlogin(obj));
@@ -112,7 +111,6 @@ export default function Auth():JSX.Element{
           });
 
         let json = await res.json();
-        console.log(json)
 
         if (json.message){
             let obj: {message: string} = json;

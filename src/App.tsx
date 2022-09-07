@@ -1,17 +1,18 @@
 import Auth from './components/auth/Auth';
-import Coin from './components/coin/Coin';
-import { RootState, useAppDispatch, useAppSelector } from './Redux/store';
+import Coinbox from './components/coinsbox/coinsbox';
+import MainUI from './components/mainui/mainUI';
+import { RootState, useAppSelector } from './Redux/store';
 
 
 function App() {
-  let user = useAppSelector((state:RootState)=>state.user);
-  let dispatch = useAppDispatch();
+  let auth = useAppSelector((state:RootState)=>state.user.auth);
 
 
   return (
     <div className="App">
-      {user.auth? 'Авторизован':'Не авторизован'}
-      {!user.auth && <Auth/>}
+      <MainUI/>
+      <Coinbox/>
+      {!auth && <Auth/>}
     </div>
   );
 }
@@ -20,6 +21,3 @@ export default App;
 
 
 
-{/* <div className='timebox'>
-<Coin size={100}/>
-</div> */}

@@ -63,11 +63,14 @@ const UserSlice = createSlice({
 
       settoken(payload.token)
     },
+    setbalance(state,actions:PayloadAction<{monetbalance:number;}>){
+      state.monetbalance=actions.payload.monetbalance
+    },
   },
   extraReducers:{
     
   }
 })
 
-export const {cleanmessage, setmessage,startload,endload, setlogin} = UserSlice.actions
+export const {cleanmessage, setmessage,startload,endload, setlogin, setbalance} = UserSlice.actions
 export default UserSlice.reducer

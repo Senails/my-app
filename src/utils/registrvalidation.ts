@@ -14,6 +14,7 @@ export function validation({email,password, name ,reppass}:propstype):returntype
     if (testemail) return testemail
 
     if (name.length<=4) return {massage: 'Имя должно содержать минимум 4 символа'}
+    if (name.length>=10) return {massage: 'Пожалуйста ограничтесь 10 символами в вашем нике'}
 
     let testpassword = checkpassword(password)
     if (testpassword) return testpassword

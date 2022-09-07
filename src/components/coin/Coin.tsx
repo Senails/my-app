@@ -1,26 +1,99 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { apiadress } from '../../api/data';
+import { RootState, useAppDispatch, useAppSelector } from '../../Redux/store'
+import {setbalance} from './../../Redux/Slices/Userslice'
+import { getkey } from '../../utils/createcode';
 import './style.scss'
 
-export default function Coin({size}:{size:number}){
-    let coinbox1 = useRef<HTMLDivElement>(null)
-    let coinbox2 = useRef<HTMLDivElement>(null)
-    let coin = useRef<HTMLDivElement>(null)
+type propstype = {
+    size:number;
+    delay:number;
+    time:number;
+}
 
-    let rand = Math.floor(Math.random()*6)
+export default function Coin({size,time,delay}:propstype){
+    let dispatch = useAppDispatch();
+    let {token,auth}=useAppSelector((state:RootState)=>state.user)
+
+    let [state, setstate] = useState<'show'|'hide'>('show')
+    let [opacity , setopacity] = useState(false);
+    let [hhide,sethhide]=useState<''|' none'>('');
+
+    let coinbox1 = useRef<HTMLDivElement>(null)
 
     useEffect(()=>{
-        let randnum = Math.floor(Math.random()*20)-10;
-        if (coinbox2.current) coinbox2.current.style.transform = `rotate(${randnum}deg)`;
         if (coinbox1.current){
             coinbox1.current.style.width=`${size}px`;
             coinbox1.current.style.height=`${size}px`;
         }
-        let randnum2 = (Math.floor(Math.random()*60)+60);
     },[]);
 
-    return <div ref={coinbox1} className="coinbox">
-        <div ref={coinbox2} className='coinbox2'>
-            <div ref={coin} className={'coin var'+rand}></div>
+    let mausehandler =function(){
+        if (auth){
+            if (state==='show'){
+                setstate('hide');
+                addcoin();
+                setTimeout(() => {
+                    setopacity(true)
+
+                    setTimeout(() => {
+                        sethhide(' none')
+
+                        setTimeout(()=>{
+                            sethhide('')
+
+                            setTimeout(() => {
+                                setstate('show')
+                                setopacity(false)
+                            }, 100);
+                        },delay*1000)
+                    }, 500);
+
+                }, 500);
+            }
+        }
+    }
+
+    let addcoin = async function() {
+        let res = await fetch(apiadress+'/addcoins',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                "token": token,
+                "coin": 1,
+                "key": getkey()
+            })
+        })
+
+        let json = await res.json();
+        if (json.monetbalance){
+            dispatch(setbalance(json))
+        }
+
+    }
+
+    let img;
+    if (size>60){
+        img = ' img1'
+    }else if (size<=60 && size>50){
+        img = ' img2'
+    }else if (size<=50 && size>40){
+        img = ' img3'
+    }else if (size<=40){
+        img = ' img4'
+    }
+
+    return <div ref={coinbox1} className={'coinbox'+hhide}>
+        <div className={'coinbox2 '+ state}>
+            <div onClick={mausehandler} className={'coin var'+time+img}></div>
         </div>
+        {state==='hide' &&
+        <span className={'text '+(opacity && 'opacity')}>
+            +1 <div></div>
+        </span>
+        }
     </div>
 }
+
