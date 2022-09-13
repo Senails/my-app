@@ -14,14 +14,14 @@
         border-radius: 50%;
         background-image: url('../../assets/loader.svg');
         background-size: contain;
-        animation-name: anime;
+        animation-name: animeloding;
         animation-duration: 1s;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }
 }
 
-@keyframes anime {
+@keyframes animeloding {
     from {
         transform: rotate(0deg);
     }

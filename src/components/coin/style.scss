@@ -18,19 +18,19 @@
             background-size: contain;
             filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
             &.var1 {
-                animation: anime 30s infinite;
+                animation: animecoinmove 30s infinite;
             }
             &.var2 {
-                animation: anime 37s infinite;
+                animation: animecoinmove 37s infinite;
             }
             &.var3 {
-                animation: anime 45s infinite;
+                animation: animecoinmove 45s infinite;
             }
             &.var4 {
-                animation: anime 52s infinite;
+                animation: animecoinmove 52s infinite;
             }
             &.var5 {
-                animation: anime 60s infinite;
+                animation: animecoinmove 60s infinite;
             }
             &.img1 {
                 background-image: url('../../assets/coin1.png');
@@ -80,7 +80,7 @@
     }
 }
 
-@keyframes anime {
+@keyframes animecoinmove {
     0% {
         transform: translateY(0) translateX(0);
     }
