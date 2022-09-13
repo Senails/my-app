@@ -7,10 +7,9 @@ export function getkey():number {
     let h = date.getUTCHours();
     let min = date.getUTCMinutes();
     let sec = date.getUTCSeconds();
+    let str = Math.floor(sec / 5);
 
-    let str = Math.floor(sec / 10);
-
-    let sum = +('' + y + m + d + h + min + str) * min * str;
+    let sum = +(Math.floor(+('' + y + m + d + h + min) / min)+''+str);
 
     return sum
 }

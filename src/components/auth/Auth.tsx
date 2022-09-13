@@ -38,27 +38,32 @@ export default function Auth():JSX.Element{
             dispatch(setmessage(res.massage))
         }else{
 
-            let resfetch = await fetch(apiadress+'/auth/registr',{
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({
-                    "email": email,
-                    "password": pass,
-                    "nickname" : nick
-                })
-            });
-            let json = await resfetch.json();
+            try{
+                let resfetch = await fetch(apiadress+'/auth/registr',{
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify({
+                        "email": email,
+                        "password": pass,
+                        "nickname" : nick
+                    })
+                });
+                let json = await resfetch.json();
 
-            if (json.message){
-                let obj: {message: string} = json;
-                dispatch(setmessage(obj.message));
-                console.log(json)
-            }else{
-                let obj: loginprops = json;
-                dispatch(setlogin(obj));
+                if (json.message){
+                    let obj: {message: string} = json;
+                    dispatch(setmessage(obj.message));
+                    console.log(json)
+                }else{
+                    let obj: loginprops = json;
+                    dispatch(setlogin(obj));
+                }
+            }catch{
+                dispatch(setmessage('Какая то ошибка с подключением к серверу'));
             }
+
         }
 
 
@@ -69,6 +74,7 @@ export default function Auth():JSX.Element{
         dispatch(cleanmessage())
         dispatch(startload());
 
+        try{
         let res = await fetch(apiadress+'/auth/login',{
             method: 'POST',
             headers: {
@@ -81,7 +87,7 @@ export default function Auth():JSX.Element{
           });
 
         let json = await res.json();
-
+        
         if (json.message){
             let obj: {message: string} = json;
             dispatch(setmessage(obj.message));
@@ -90,6 +96,11 @@ export default function Auth():JSX.Element{
             let obj: loginprops = json;
             dispatch(setlogin(obj));
         }
+        }catch{
+            dispatch(setmessage('Какая то ошибка с подключением к серверу'));
+        }
+
+
         dispatch(endload());
     },[])
 
@@ -100,27 +111,31 @@ export default function Auth():JSX.Element{
         dispatch(cleanmessage())
         dispatch(startload());
 
-        let res = await fetch(apiadress+'/auth/me',{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                "token": token
-                })
-          });
+        try{
+            let res = await fetch(apiadress+'/auth/me',{
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    "token": token
+                    })
+            });
 
-        let json = await res.json();
+            let json = await res.json();
 
-        if (json.message){
-            let obj: {message: string} = json;
-            dispatch(setmessage(obj.message));
-        }else{
-            let obj: loginprops = json;
-            dispatch(setlogin(obj));
+            if (json.message){
+                let obj: {message: string} = json;
+                dispatch(setmessage(obj.message));
+            }else{
+                let obj: loginprops = json;
+                dispatch(setlogin(obj));
+            }
+        }catch{
+            dispatch(setmessage('Какая то ошибка с подключением к серверу'));
         }
+
         dispatch(endload());
-        
     },[])
 
     useEffect(()=>{authme()},[])
