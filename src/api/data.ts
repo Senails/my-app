@@ -1,1 +1,1 @@
-export const apiadress = 'http://localhost:4000';
+export const apiadress = 'https://apiretion.herokuapp.com';
