@@ -63,7 +63,8 @@ export default function Coin({size,time,delay}:propstype){
             body: JSON.stringify({
                 "token": token,
                 "coin": 1,
-                "key": getkey()
+                "key": getkey(),
+                time : new Date()
             })
         })
 
