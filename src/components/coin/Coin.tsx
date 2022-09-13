@@ -64,7 +64,7 @@ export default function Coin({size,time,delay}:propstype){
                 "token": token,
                 "coin": 1,
                 "key": getkey(),
-                time : new Date()
+                time : new Date().toUTCString()
             })
         })
 
