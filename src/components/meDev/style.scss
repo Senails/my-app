@@ -1,0 +1,29 @@
+.aboutme {
+    position: fixed;
+    z-index: 200;
+    top: 40vh;
+    right: 1vh;
+    width: 5vh;
+    height: 18vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    a {
+        display: block;
+        width: 5vh;
+        height: 5vh;
+        border-radius: 50%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        &:nth-child(1) {
+            background-image: url('./../../assets/figma.png');
+        }
+        &:nth-child(2) {
+            background-image: url('./../../assets/githab.png');
+        }
+        &:nth-child(3) {
+            background-image: url('./../../assets/sen.png');
+        }
+    }
+}
