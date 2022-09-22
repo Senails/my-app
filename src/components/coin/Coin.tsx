@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { apiadress } from '../../api/data';
 import { RootState, useAppDispatch, useAppSelector } from '../../Redux/store'
 import {setbalance} from './../../Redux/Slices/Userslice'
-import { getkey } from '../../utils/createcode';
 import './style.scss'
 
 type propstype = {
@@ -63,8 +62,6 @@ export default function Coin({size,time,delay}:propstype){
             body: JSON.stringify({
                 "token": token,
                 "coin": 1,
-                "key": getkey(),
-                time : new Date().toUTCString()
             })
         })
 
