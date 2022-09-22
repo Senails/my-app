@@ -8,7 +8,6 @@ export default function MainUI(){
     return <div className={'mainui '+(auth && 'active')}>
         <div className='left'>
             <span className='name'>
-                <div className='avatar'></div>
                 {nickname}
             </span>
             {monetbalance!==0 &&
